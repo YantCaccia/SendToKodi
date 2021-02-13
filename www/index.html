@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Pacifico&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+    <script src="./js/jquery-2.1.0.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/blocs.min.js"></script>
+    <script src="./js/jqBootstrapValidation.js"></script>
+    <script src="./js/formHandler.js"></script>
+    <title>SendToKodi</title>
+    <script src="jq.js"></script>
+    <script src="js/index.js"></script>
+    <script src="cordova.js"></script>
+    <script src="cordova_plugins.js"></script>
+
+    <!-- Google Analytics -->
+
+    <!-- Google Analytics END -->
+
+</head>
+
+<body>
+    <!-- Main container -->
+    <div class="page-container">
+
+        <!-- bloc-0 -->
+        <div class="bloc bgc-white l-bloc" id="bloc-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="mg-md  text-center-sm tc-radical-red mg-md-sm title1">
+                            SendToKodi
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- bloc-0 END -->
+
+        <!-- bloc-1 -->
+        <div class="bloc bgc-white l-bloc" id="bloc-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="mg-md  tc-outer-space mg-md-sm" style="line-height: 35px; margin-bottom:10px;">
+                            IP address of your Kodi machine:
+                        </h1>
+                        <form id="form_11952" novalidate>
+                            <div class="form-group">
+                                <input class="form-control" id="casella0" />
+                            </div>
+                        </form>
+                        <h1 class="mg-md  tc-outer-space mg-lg-sm piugiu" style="line-height: 35px; margin-bottom:10px;">
+                            Paste the <h style="color:#FF3E5F;">link</h> you want to send.
+                        </h1>
+                        <form id="form_45770" novalidate>
+                            <div class="form-group">
+                                <input class="form-control pigiu" id="casella" />
+                            </div>
+                        </form>
+                        <h5 id="errmess" class="mg-md " style="visibility:hidden;">
+					       Oops! Something went wrong. Try again and be sure all data are correct. ✌🏼<br>
+				        </h5>
+                        <div class="text-center">
+					<a class="btn btn-radical-red btn-rd button btn-lg " id="su"><span class="li_paperplane icon-spacer icon-sm"></span>Play!</a>
+				</div>
+				<div class="divider-h" style="visibility:hidden;">
+					<span class="divider"></span>
+				</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- bloc-1 END -->
+
+        <!-- ScrollToTop Button -->
+        <a class="bloc-button btn btn-d scrollToTop" onclick="scrollToTarget('1')"><span class="fa fa-chevron-up"></span></a>
+        <!-- ScrollToTop Button END-->
+
+
+    </div>
+    <!-- Main container END -->
+
+
+</body>
+
+</html>
