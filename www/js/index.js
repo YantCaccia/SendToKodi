@@ -27,6 +27,7 @@ var app = {
         const errmess = document.getElementById('errmess');
         const casella = document.getElementById('casella');
         const casella0 = document.getElementById('casella0');
+        const kodiVersionInput = document.getElementById('kodiVersion');
         document.getElementById("su").addEventListener('click', play);
 
         document.addEventListener('input', function (event) {
@@ -52,6 +53,10 @@ var app = {
             casella0.value = result
         }, function () {});
 
+        NativeStorage.getItem("kodiVersion", function (result) {
+            kodiVersionInput.value = result
+        }, function () {});
+
 
         window.plugins.intentShim.onIntent(function (intent) {
             let link = intent.extras["android.intent.extra.TEXT"];
@@ -59,13 +64,14 @@ var app = {
                 casella.value = "";
             } else {
                 casella.value = link;
-                NativeStorage.getItem("ip", function (result) {
-                    sendstream(link, result);
+                NativeStorage.getItem("ip", function (ip) {
+                    NativeStorage.getItem("kodiVersion", function(kodiVersion){
+                        sendstream(link, ip, kodiVersion);
+                    })
                 }, function () {});
             }
 
         });
-
 
         window.plugins.intentShim.getIntent(function (intent) {
             let link = intent.extras["android.intent.extra.TEXT"];
@@ -73,25 +79,34 @@ var app = {
                 casella.value = "";
             } else {
                 casella.value = link;
-                NativeStorage.getItem("ip", function (result) {
-                    sendstream(link, result);
+                NativeStorage.getItem("ip", function (ip) {
+                    NativeStorage.getItem("kodiVersion", function(kodiVersion){
+                        sendstream(link, ip, kodiVersion);
+                    })
                 }, function () {});
             }
         }, function () { /*this is the error callback*/ });
 
         function play() {
+            let kodiVersion = kodiVersionInput.value.toString();
             let indip = casella0.value.toString();
             let link = casella.value;
             if (indip == "") {
                 casella0.placeholder = "Put your IP first!"
             } else {
-                NativeStorage.setItem("ip", indip, sendstream(link, indip), );
+                NativeStorage.setItem("kodiVersion", kodiVersion);
+                NativeStorage.setItem("ip", indip, sendstream(link, indip, kodiVersion), );
             }
-            //sendstream(link, indip);
         }
 
-        function sendstream(link, indip) {
-            let data = '{"jsonrpc": "2.0", "method": "Player.Open", "params": {"item":{ "file": "plugin://plugin.video.sendtokodi/?' + link + '"}}, "id": 1}';
+        function sendstream(link, indip, kodiVersion) {
+            let pluginId;
+            if (kodiVersion == "v19") {
+                pluginId = "plugin.video.sendtokodi.python3";
+            } else {
+                pluginId = "plugin.video.sendtokodi";
+            }
+            let data = '{"jsonrpc": "2.0", "method": "Player.Open", "params": {"item":{ "file": "plugin://' + pluginId + '/?' + link + '"}}, "id": 1}';
             let json = JSON.stringify(eval("(" + data + ")"));
             let websocket = new WebSocket('ws://' + indip + ':9090/jsonrpc?awxi');
             websocket.onerror = function () {
@@ -102,6 +117,31 @@ var app = {
                 errmess.setAttribute('style', 'visibility:hidden');
             };
         }
+
+        // function checkKodiVersion(){
+
+        //     let data = '{"jsonrpc": "2.0", "method": "Addons.GetAddons", "id": 1}';
+        //     let json = JSON.stringify(eval("(" + data + ")"));
+        //     let websocket = new WebSocket('ws://' + indip + ':9090/jsonrpc?awxi');
+        //     websocket.onerror = function () {
+        //         errmess.setAttribute('style', 'visibility:visible');
+        //     };
+        //     websocket.onopen = function (evt) {
+        //         websocket.send(json);
+        //         errmess.setAttribute('style', 'visibility:hidden');
+        //     };
+
+
+        //     let addonsIds = response.result.addons.map((value)=> value.addonid)
+        //     console.log(addonsIds);
+        //     if (addonsIds.includes("plugin.video.sendtokodi")){
+        //         console.log("Kodi18");
+        //     } else if (addonsIds.includes("plugin.video.sendtokodi.python3")) {
+        //         console.log("Kodi19");
+        //     } else {
+        //         console.log("Error");
+        //     }
+        // }
     },
 };
 
